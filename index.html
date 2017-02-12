@@ -49,10 +49,12 @@
                                                 data: JSON.stringify(paymentDetails),
                                 })
                                 .done(function(data) {
+                                    var paymentObject = getPaymentDetails(data.id);
+                                    //console.log(paymentObject.paymentStatus);
                                                                                                 //Got an accounts/{id}/transactions response
                                                                                                 console.log("transaction was successfull, transaction ID:" + data.id);
                                                                                                 console.log(data.id);
- 
+    
                                                                                                 })
                                                                                 .fail(function(err) {
                                                                                                 //Didn't get an accounts/{id}/transactions response
@@ -67,24 +69,25 @@
                getBalance("5890a0589caecb871299c4d4", "Current Account");
 
            }
-
+//https://bluebank.azure-api.net/api/v0.6.3/accounts/5890a0589caecb871299c4d4/payments
          function getSavingBalance() {
 
                getBalance("5890a0589caecb871299c4d5", "Savings Account");
 
            }
 
-        function getTransationDetails() {
+        function getPaymentDetails(paymentId) {
+            var accountId ="5890a0589caecb871299c4d4";
             $.ajax({
-                                                url: "https://bluebank.azure-api.net/api/v0.6.3/accounts/"+ accountId,beforeSend: function(xhrObj){
+                                                url: "https://bluebank.azure-api.net/api/v0.6.3/accounts/"+ accountId+"/payments/"+paymentId,beforeSend: function(xhrObj){
                                                                 xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",devKey);
                                                                 xhrObj.setRequestHeader("bearer",bearer);
                                                 },
                                                 type: "GET",
                                 }).done(function(data) {
                                                 //Got a customers response
-                                               
-
+                                               console.log(data.paymentAmount);
+                                                return data;
 
 
 
