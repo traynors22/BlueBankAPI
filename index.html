@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>JSSample</title>
+<title>BlueBankAPI</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js">
 </script>
 </head>
@@ -83,19 +83,7 @@
                                                 type: "GET",
                                 }).done(function(data) {
                                                 //Got a customers response
-                                                //var customerId=data.id;
-                                                var currency="";
-                                                if( data.accountCurrency=="GBP"){
-                                                currency="£";
-                                                }else if( data.accountCurrency=="USD"){
-                                                currency="$";
-                                                }else if( data.accountCurrency=="EUR"){
-                                                currency="€";
-                                                }else{
-                                                currency=""
-                                                }
                                                
-                                                console.log("Your %s balance is: %s%s", accountType ,currency ,data.accountBalance);
 
 
 
