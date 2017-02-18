@@ -26,16 +26,28 @@ var router = express.Router();              // get an instance of the express Ro
 router.get('/getBalance', function(req, res) {
 
 
-request.get('https://www.google.com',function(err,res,body){
-  if(err) //TODO: handle err
-  if(res.statusCode !== 200 ){
-  	res.json({ message: 'yay!' });
-  } //etc
-  //TODO Do something with response
+var request = require('request');
+
+var options={
+	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/5890a0589caecb871299c4d4',
+	headers: {'Ocp-Apim-Subscription-Key': devKey,
+				"bearer": bearer}
+}
+
+request(options, function (error, response, body) {
+	console.log("Response Code: "+ response.statusCode);
+  if (!error && response.statusCode == 200) {
+    //console.log("call successfull"+body+"response: "+ response); // Print the google web page.
+    var balance = response.accountBalance;
+    res.json(JSON.stringify(body)); 
+    console.log("Current Balance: " + balance);
+  }else{
+  	console.log("error: "+error);
+  }
 });
 	
 
-    res.json({ message: 'hooray! api!' });   
+    //res.json({ message: 'hooray! api!' });   
 });
 
 
@@ -45,6 +57,40 @@ router.get('/getTransactions', function(req, res) {
 	console.log(user_id);
 
     res.json({ message: 'this will be Transactions '+user_id  });   
+});
+
+router.get('/getCurrentAccount', function(req, res) {
+
+	var user_id = req.param('id');
+	//console.log(user_id);
+
+    res.json({ cBalance: '£120'  });   
+});
+
+router.get('/getUserHolidayData', function(req, res) {
+
+	var Destination = req.param('Destination');
+	//console.log(user_id);
+
+    res.json({ Destination: Destination  ,
+    	cost: '£2500'
+						});   
+});
+
+router.get('/getHolidayDest', function(req, res) {
+
+	var date = req.param('date');
+	//console.log(user_id);
+
+    res.json({ HolidayDest: 'Dominican Republic, Grenada, Jamaica, St Barts & St Lucia'  });   
+});
+
+router.get('/getSavingAccount', function(req, res) {
+
+	var user_id = req.param('id');
+	//console.log(user_id);
+
+    res.json({ sBalance: '£920'  });   
 });
 
 app.post('/transferfunds', function(req, res) {
