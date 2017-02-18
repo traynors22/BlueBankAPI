@@ -54,3 +54,41 @@ transaction();
                                                                                 });
  
                 }
+
+
+
+                getBalance(); 
+function getBalance() {
+               
+                var accountId = "5890a0589caecb871299c4d5";
+                var accountType = "Savings Account";
+ 
+                                $.ajax({
+                                                url: "https://bluebank.azure-api.net/api/v0.6.3/accounts/"+ accountId,beforeSend: function(xhrObj){
+                                                                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",devKey);
+                                                                xhrObj.setRequestHeader("bearer",bearer);
+                                                },
+                                                type: "GET",
+                                })
+                                .done(function(data) {
+                                                //Got a customers response
+                                                //var customerId=data.id;
+                                                var currency="";
+                                                if( data.accountCurrency=="GBP"){
+                                                currency="£";
+                                                }else if( data.accountCurrency=="USD"){
+                                                currency="$";
+                                                }else if( data.accountCurrency=="EUR"){
+                                                currency="€";
+                                                }else{
+                                                currency=""
+                                                }
+                                               
+                                                console.log("Your %s balance is: %s%s", accountType ,currency ,data.accountBalance);
+
+
+                                               //res.json({ message2: data.accountBalance })
+
+                                                })
+               
+                }
