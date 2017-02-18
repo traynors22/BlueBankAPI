@@ -14,6 +14,7 @@ var currentAccountId= '5890a0589caecb871299c4d4';
 var getSavingAccountId= '5890a0589caecb871299c4d5';
 var accountId = '';
 var accountType = '';
+var url = 'https://bluebank.azure-api.net/api/v0.6.3';
 var request = require('request');
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -47,7 +48,7 @@ accountType = "Current Account";
 }
 
 var options={
-	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/'+accountId,
+	url: url +'/accounts/'+accountId,
 	headers: {'Ocp-Apim-Subscription-Key': devKey,
 				"bearer": bearer}
 }
@@ -114,6 +115,43 @@ router.get('/getSavingAccount', function(req, res) {
 	//console.log(user_id);
 
     res.json({ sBalance: '£920'  });   
+});
+
+router.get('/transferFundsTo', function(req, res) {
+
+var requestData = {
+"toAccountNumber":"50000366",
+"toSortCode":"839999",
+"paymentReference":"savings",
+"paymentAmount":"2"
+}
+// var options={
+// 	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/'+accountId,
+// 	method: "POST",
+//  json: true,
+//  body: JSON.stringify(requestData)
+// 	headers: {"content-type": "application/json",
+// 				'Ocp-Apim-Subscription-Key': devKey,
+// 				"bearer": bearer}
+
+
+// }
+
+request(options, function (error, response, body) {
+	console.log("Response Code: "+ response.statusCode);
+  if (!error && response.statusCode == 200) {
+    //console.log("call successfull"+body+"response: "+ response); // Print the google web page.
+   
+    // var obj = JSON.parse(body);
+    // console.log(obj.accountBalance);
+    // res.json({ balance: obj.accountBalance,
+    //  			accountType: accountType}); 
+  }else{
+  	console.log("error: "+error);
+  	res.json({ message: "API is currently down, please contact you admin" }); 
+  }
+});
+
 });
 
 app.post('/transferfunds', function(req, res) {
