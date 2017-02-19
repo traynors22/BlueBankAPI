@@ -54,67 +54,52 @@ var options={
 }
 
 request(options, function (error, response, body) {
+	console.log("-----------------------------------");
+	console.log("  ");
+	console.log("...Calling GET https://bluebank.azure-api.net/api/v0.6.3/accounts/<accountID> ");
+	console.log("  ");
 	console.log("Response Code: "+ response.statusCode);
   if (!error && response.statusCode == 200) {
     //console.log("call successfull"+body+"response: "+ response); // Print the google web page.
    
     var obj = JSON.parse(body);
-    console.log(obj.accountBalance);
+    console.log("Balance: " + obj.accountBalance);
+    console.log("  ");
+    console.log("-----------------------------------");
     res.json({ balance: obj.accountBalance,
      			accountType: accountType}); 
   }else{
   	console.log("error: "+error);
+  	console.log("-----------------------------------");
   	res.json({ message: "API is currently down, please contact you admin" }); 
   }
 });
-	
-
-    //res.json({ message: 'hooray! api!' });   
+ 
 });
 
-
-router.get('/getTransactions', function(req, res) {
+router.get('/getHolidayInfoSS', function(req, res) {
 
 	var user_id = req.param('id');
-	console.log(user_id);
-
-    res.json({ message: 'this will be Transactions '+user_id  });   
+	console.log("-----------------------------------");
+	console.log("  ");
+	console.log("...Calling GET http://partners.api.skyscanner.net/apiservices/browsegrid/v1.0/Lasvagas/gbp ");
+	console.log("  ");
+	console.log("Hotel: £800 Flights: £1000  ");
+	console.log("-----------------------------------");
+    res.json({ Hotel: '£800', Flights: '£1000' });   
 });
 
-router.get('/getCurrentAccount', function(req, res) {
+
+router.get('/getTransactionData', function(req, res) {
 
 	var user_id = req.param('id');
-	//console.log(user_id);
-
-    res.json({ cBalance: '£120'  });   
-});
-
-router.get('/getUserHolidayData', function(req, res) {
-
-	var Destination = req.param('Destination');
-	//console.log(user_id);
-
-    res.json({ Destination: Destination  ,
-    	cost: '£2500',
-    	sDate: '07/03/17',
-    	eDate: '14/03/17'
-						});   
-});
-
-router.get('/getHolidayDest', function(req, res) {
-
-	var date = req.param('date');
-	//console.log(user_id);
-
-    res.json({ HolidayDest: 'Dominican Republic, Grenada, Jamaica, St Barts & St Lucia'  });   
-});
-
-router.get('/getSavingAccount', function(req, res) {
-
-	var user_id = req.param('id');
-	//console.log(user_id);
-
-    res.json({ sBalance: '£920'  });   
+	console.log("-----------------------------------");
+	console.log("  ");
+	console.log("...Calling GET https://bluebank.azure-api.net/api/v0.6.3/accounts/<AccountId>/transactions");
+	console.log("  ");
+	console.log("Searching Las Vagas");
+	console.log("-----------------------------------");
+    res.json({ ID: '', cost: '£3500' });   
 });
 
 router.get('/transferFundsTo', function(req, res) {
@@ -122,9 +107,11 @@ router.get('/transferFundsTo', function(req, res) {
 var requestData = {
 "toAccountNumber":"50000366",
 "toSortCode":"839999",
-"paymentReference":"savings",
-"paymentAmount":"12"
+"paymentReference":"Flights to Las Vagas",
+"paymentAmount":"1"
 }
+
+
 var options={
 	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/'+currentAccountId+"/payments",
 	method: "POST",
@@ -139,10 +126,20 @@ var options={
 }
 
 function callback(error, response, body) {
+		console.log("-----------------------------------");
+		console.log("  ");
+	console.log("...Calling POST https://bluebank.azure-api.net/api/v0.6.3/accounts/<accountID>/payments ");
+	console.log("  ");
+	console.log("Response Code: "+ response.statusCode);
     if (!error) {
         var info = JSON.parse(JSON.stringify(body));
+        console.log("Payment made, information below: ");
         console.log(info);
+		console.log("  ");
+		console.log("-----------------------------------");
         res.json(info); 
+
+
     }
     else {
         console.log('Error happened: '+ error);
@@ -153,20 +150,7 @@ function callback(error, response, body) {
 //send request
 request(options, callback);
 
-// request(options, function (error, response, body) {
-// 	console.log("Response Code: "+ response.statusCode);
-//   if (!error && response.statusCode == 200) {
-//     console.log("call successfull"+body+"response: "+ response); // Print the google web page.
-   
-//     // var obj = JSON.parse(body);
-//     // console.log(obj.accountBalance);
-//     // res.json({ balance: obj.accountBalance,
-//     //  			accountType: accountType}); 
-//   }else{
-//   	console.log("error: "+error);
-//   	res.json({ message: "API is currently down, please contact you admin" }); 
-//   }
-// });
+
 
 });
 
