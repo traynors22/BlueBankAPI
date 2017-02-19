@@ -131,7 +131,7 @@ request(options, function (error, response, body) {
 router.get('/transferFundsTo', function(req, res) {
 
 var requestData = {
-"toAccountNumber":"50000366",
+"toAccountNumber":"50000365",
 "toSortCode":"839999",
 "paymentReference":"Flights to Las Vagas",
 "paymentAmount":"1"
@@ -139,7 +139,7 @@ var requestData = {
 
 
 var options={
-	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/'+currentAccountId+"/payments",
+	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/'+getSavingAccountId+"/payments",
 	method: "POST",
  json: true,
  body: requestData,
