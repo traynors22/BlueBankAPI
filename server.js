@@ -63,7 +63,8 @@ request(options, function (error, response, body) {
     //console.log("call successfull"+body+"response: "+ response); // Print the google web page.
    
     var obj = JSON.parse(body);
-    console.log("Balance: " + obj.accountBalance);
+    console.log(obj);
+    //console.log("Balance: " + obj.accountBalance);
     console.log("  ");
     console.log("-----------------------------------");
     res.json({ balance: obj.accountBalance,
