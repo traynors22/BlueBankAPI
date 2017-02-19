@@ -82,7 +82,7 @@ router.get('/getHolidayInfoSS', function(req, res) {
 	var user_id = req.param('id');
 	console.log("-----------------------------------");
 	console.log("  ");
-	console.log("...Calling GET http://partners.api.skyscanner.net/apiservices/browsegrid/v1.0/Lasvagas/gbp ");
+	console.log("...Calling GET http://partners.api.skyscanner.net/apiservices/browsegrid/v1.0/Lasvagas/gbp/march ");
 	console.log("  ");
 	console.log("Hotel: £800 Flights: £1000  ");
 	console.log("-----------------------------------");
@@ -91,15 +91,40 @@ router.get('/getHolidayInfoSS', function(req, res) {
 
 
 router.get('/getTransactionData', function(req, res) {
-
+	var options={
+	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/5890a0589caecb871299c4d4/transactions',
+	headers: {'Ocp-Apim-Subscription-Key': devKey,
+				"bearer": bearer}
+}
 	var user_id = req.param('id');
 	console.log("-----------------------------------");
 	console.log("  ");
 	console.log("...Calling GET https://bluebank.azure-api.net/api/v0.6.3/accounts/<AccountId>/transactions");
 	console.log("  ");
-	console.log("Searching Las Vagas");
+	console.log("Searching transactions for Las Vagas");
 	console.log("-----------------------------------");
-    res.json({ ID: '', cost: '£3500' });   
+request(options, function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    //console.log("call successfull"+body+"response: "+ response); // Print the google web page.
+    //console.log(body);
+    var info = JSON.parse(JSON.stringify(body));
+    console.log(info);
+    console.log(" ------------------------------------- ");
+    console.log("  ");
+    console.log(" Return { location: Las Vagas, cost: £3500, Date: 07/03/15  }");
+    console.log("  ");
+    console.log(" ------------------------------------- ");
+    // console.log("-----------------------------------");
+    // res.json({ balance: obj.accountBalance,
+    //  			accountType: accountType}); 
+      res.json({ ID: '5890a0579caecb871299c', cost: '£3500', Date: '27/03/15' });  
+  }else{
+  	console.log("error: "+error);
+  	res.json({ message: "API is currently down, please contact you admin" }); 
+  }
+});
+	//https://bluebank.azure-api.net/api/v0.6.3/accounts/"+currentAccountId+"/transactions
+   
 });
 
 router.get('/transferFundsTo', function(req, res) {
