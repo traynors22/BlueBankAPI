@@ -123,34 +123,50 @@ var requestData = {
 "toAccountNumber":"50000366",
 "toSortCode":"839999",
 "paymentReference":"savings",
-"paymentAmount":"2"
+"paymentAmount":"12"
 }
-// var options={
-// 	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/'+accountId,
-// 	method: "POST",
-//  json: true,
-//  body: JSON.stringify(requestData)
-// 	headers: {"content-type": "application/json",
-// 				'Ocp-Apim-Subscription-Key': devKey,
-// 				"bearer": bearer}
+var options={
+	url: 'https://bluebank.azure-api.net/api/v0.6.3/accounts/'+currentAccountId+"/payments",
+	method: "POST",
+ json: true,
+ body: requestData,
+ port: '8080',
+	headers: {"content-type": "application/json",
+				'Ocp-Apim-Subscription-Key': devKey,
+				"bearer": bearer}
 
 
-// }
+}
 
-request(options, function (error, response, body) {
-	console.log("Response Code: "+ response.statusCode);
-  if (!error && response.statusCode == 200) {
-    //console.log("call successfull"+body+"response: "+ response); // Print the google web page.
+function callback(error, response, body) {
+    if (!error) {
+        var info = JSON.parse(JSON.stringify(body));
+        console.log(info);
+        res.json(info); 
+    }
+    else {
+        console.log('Error happened: '+ error);
+        res.json({ message: "API is currently down, please contact you admin" }); 
+    }
+}
+
+//send request
+request(options, callback);
+
+// request(options, function (error, response, body) {
+// 	console.log("Response Code: "+ response.statusCode);
+//   if (!error && response.statusCode == 200) {
+//     console.log("call successfull"+body+"response: "+ response); // Print the google web page.
    
-    // var obj = JSON.parse(body);
-    // console.log(obj.accountBalance);
-    // res.json({ balance: obj.accountBalance,
-    //  			accountType: accountType}); 
-  }else{
-  	console.log("error: "+error);
-  	res.json({ message: "API is currently down, please contact you admin" }); 
-  }
-});
+//     // var obj = JSON.parse(body);
+//     // console.log(obj.accountBalance);
+//     // res.json({ balance: obj.accountBalance,
+//     //  			accountType: accountType}); 
+//   }else{
+//   	console.log("error: "+error);
+//   	res.json({ message: "API is currently down, please contact you admin" }); 
+//   }
+// });
 
 });
 
@@ -159,7 +175,7 @@ app.post('/transferfunds', function(req, res) {
     var toSortCode= req.body.toSortCode;
     var paymentReference= req.body.paymentReference;
     var paymentAmount= req.body.paymentAmount;
-
+    console.log(toSortCode);
 
 
     res.send(toAccountNumber + ' ' + paymentAmount + ' ' + paymentReference);

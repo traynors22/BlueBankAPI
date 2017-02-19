@@ -6,9 +6,73 @@
 }
 
 
+https://bluebank.azure-api.net/api/v0.6.3/customers/5890a0579caecb871299c4d3
+
+https://bluebank.azure-api.net/api/v0.6.3/accounts/50000366/payments/58a86eb035c2e2881daff3f9
+
+{
+	"OTPCode": "292187"
+}
+
+[
+  {
+    "givenName": "Stephen",
+    "familyName": "Traynor",
+    "address1": "RBS",
+    "town": "Edinburgh",
+    "postCode": "EH2 6UY",
+    "id": "5890a0579caecb871299c4d3"
+  }
+]
+
+
+
+
 
 
 https://bluebank.azure-api.net/api/v0.6.3/accounts/5890a0589caecb871299c4d4
 
 
 getUserHolidayData?Destination=St Lucia
+
+/api/getBalance?account=savings
+
+var devKey = "ff962b2dfd4a414ca04d31f67a0c5bf3"
+var bearer = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjdXN0b21lcklkIjoiNThhODRmMjhjYTZiZTdiMzI2N2MzZjAzIiwicm9sZSI6InVzZXIiLCJwcmltYXJ5U3Vic2NyaWJlcktleSI6ImZmOTYyYjJkZmQ0YTQxNGNhMDRkMzFmNjdhMGM1YmYzIiwiaWF0IjoxNDg3NDMwOTIwfQ.oVO4Z1JXHuwrbZG9m00qwAIln3iUNcuYsJ7VPwNVx6g";
+
+https://bluebank.azure-api.net/api/v0.6.3/accounts/58a84f28ca6be7b3267c3f03
+
+[
+  {
+    "givenName": "Leslie",
+    "familyName": "Amarquaye",
+    "address1": "RBS",
+    "town": "Edinburgh",
+    "postCode": "EH2 6UY",
+    "id": "58a84f28ca6be7b3267c3f03"
+  }
+]
+
+
+[
+  {
+    "sortCode": "839999",
+    "accountType": "Standard Current Account",
+    "accountFriendlyName": "Current Account",
+    "accountBalance": 8276.95,
+    "accountCurrency": "GBP",
+    "customerId": "58a84f28ca6be7b3267c3f03",
+    "accountNumber": "10000396",
+    "id": "58a84f28ca6be7b3267c3f04"
+  },
+  {
+    "sortCode": "839999",
+    "accountType": "90-day Savings Account",
+    "accountFriendlyName": "Savings Account",
+    "accountBalance": 0,
+    "accountCurrency": "GBP",
+    "customerId": "58a84f28ca6be7b3267c3f03",
+    "accountNumber": "50000397",
+    "id": "58a84f28ca6be7b3267c3f05"
+  }
+]
